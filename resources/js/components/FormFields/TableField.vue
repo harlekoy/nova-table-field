@@ -63,6 +63,9 @@ import { FormField, HandlesValidationErrors } from 'laravel-nova';
 import TableRow from './TableRow';
 import autosize from 'autosize';
 import Table from './Table';
+import map from 'lodash/map';
+import tap from 'lodash/tap';
+import findIndex from 'lodash/findIndex';
 
 function guid() {
   const S4 = function () {
@@ -82,7 +85,7 @@ export default {
     let valuesArray = Array.isArray(this.field.value) ? this.value : JSON.parse(this.field.value);
     if (!Array.isArray(valuesArray) || !valuesArray.length) valuesArray = [];
 
-    this.theData = _.map(valuesArray, cells => ({
+    this.theData = map(valuesArray, cells => ({
       id: guid(),
       cells,
     }));
@@ -112,7 +115,7 @@ export default {
           type: 'error',
         });
 
-      return _.tap(guid(), id => {
+      return tap(guid(), id => {
         this.theData = [...this.theData, { id, cells: Array(this.numberOfColumns).join('.').split('.') }];
         return id;
       });
@@ -151,8 +154,8 @@ export default {
           type: 'error',
         });
 
-      return _.tap(
-        _.findIndex(this.theData, row => row.id === id),
+      return tap(
+        findIndex(this.theData, row => row.id === id),
         index => this.theData.splice(index, 1)
       );
     },

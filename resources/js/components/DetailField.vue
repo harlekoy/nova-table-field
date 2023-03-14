@@ -13,6 +13,7 @@
 <script>
 import TableRow from './FormFields/TableRow';
 import Table from './FormFields/Table';
+import map from 'lodash/map';
 
 export default {
   props: ['resource', 'resourceName', 'resourceId', 'field'],
@@ -25,7 +26,7 @@ export default {
     let valuesArray = Array.isArray(this.field.value) ? this.field.value : JSON.parse(this.field.value);
     if (!Array.isArray(valuesArray) || !valuesArray.length) valuesArray = [];
 
-    this.theData = _.map(valuesArray, cells => ({ cells }));
+    this.theData = map(valuesArray, cells => ({ cells }));
   },
 };
 </script>
